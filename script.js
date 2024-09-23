@@ -6,10 +6,22 @@ const longoBt = document.querySelector(".app__card-button--longo");
 const botaoIniciar = document.getElementById("start-pause");
 const banner = document.querySelector(".app__image");
 const titulo = document.querySelector(".app__title");
+const musicaFocoInput = document.getElementById("alternar-musica");
+const musica = new Audio("/sons/luna-rise-part-one.mp3");
+musica.loop = true;
 
 const duracaoFoco = 1500;
 const duracaoDescansoCurto = 300;
 const duracaoDescansoLongo = 900;
+
+musicaFocoInput.addEventListener("change", () => {
+    if (musica.paused) {
+        musica.play();
+    }
+    else {
+        musica.pause();
+    }
+});
 
 focoBt.addEventListener("click", () => {
     alterarContexto("foco");
