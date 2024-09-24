@@ -8,7 +8,13 @@ const banner = document.querySelector(".app__image");
 const titulo = document.querySelector(".app__title");
 const musicaFocoInput = document.getElementById("alternar-musica");
 const musica = new Audio("/sons/luna-rise-part-one.mp3");
+const somPausar = new Audio("/sons/pause.mp3");
+const somIniciar = new Audio("/sons/play.wav");
+
 musica.loop = true;
+
+let intervaloId = null;
+let tempoDecorridoEmSegundos = 5;
 
 const duracaoFoco = 1500;
 const duracaoDescansoCurto = 300;
@@ -60,4 +66,32 @@ function alterarContexto(contexto) {
         default:
             break;
     }
+}
+
+const contagemRegressiva = () => {
+    if (tempoDecorridoEmSegundos <= 0) {
+        zerar();
+        alert("Tempo finalizado.")
+        return;
+    }
+
+    tempoDecorridoEmSegundos--;
+    console.log("Temporizador: " + tempoDecorridoEmSegundos);
+}
+
+botaoIniciar.addEventListener("click", iniciarOuPausar);
+
+function iniciarOuPausar() {
+    if (intervaloId) {
+        zerar();
+        somPausar.play();
+        return;
+    }
+    intervaloId = setInterval(contagemRegressiva, 1000);
+    somIniciar.play();
+}
+
+function zerar() {
+    clearInterval(intervaloId);
+    intervaloId = null;
 }
