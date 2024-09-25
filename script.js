@@ -18,7 +18,7 @@ const somFinalizar = new Audio("/sons/beep.mp3");
 musica.loop = true;
 
 let intervaloId = null;
-let tempoDecorridoEmSegundos = 5;
+let tempoDecorridoEmSegundos = 1500;
 
 const duracaoFoco = 1500;
 const duracaoDescansoCurto = 300;
@@ -34,22 +34,26 @@ musicaFocoInput.addEventListener("change", () => {
 });
 
 focoBt.addEventListener("click", () => {
+    tempoDecorridoEmSegundos = duracaoFoco;
     alterarContexto("foco");
     focoBt.classList.add("active");
 });
 
 curtoBt.addEventListener("click", () => {
+    tempoDecorridoEmSegundos = duracaoDescansoCurto;
     alterarContexto("descanso-curto");
     curtoBt.classList.add("active");
 });
 
 longoBt.addEventListener("click", () => {
+    tempoDecorridoEmSegundos = duracaoDescansoLongo;
     alterarContexto("descanso-longo");
     longoBt.classList.add("active");
 
 });
 
 function alterarContexto(contexto) {
+    mostrarTempo();
     botoes.forEach(function (contexto) {
         contexto.classList.remove("active");
     });
@@ -106,8 +110,10 @@ function zerar() {
 }
 
 function mostrarTempo() {
-    const tempo = tempoDecorridoEmSegundos;
-    tempoNaTela.innerHTML = `${tempo}`;
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000);
+    const tempoFormatado = tempo.toLocaleTimeString("pt-Br", {minute: "2-digit", second: "2-digit"});
+
+    tempoNaTela.innerHTML = `${tempoFormatado}`;
     
 }
 
